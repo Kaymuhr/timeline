@@ -129,6 +129,9 @@
     $( "#create" ).button().on( "click", function() {
       dialog.dialog( "open" );
     });
+	  $(function() {
+    $( "#date" ).datepicker();
+  });
   });
   </script>
 </head>
@@ -141,7 +144,7 @@
     <fieldset>
       <label for="title">Title</label>
       <input type="text" name="title" id="title" value="" class="text ui-widget-content ui-corner-all">
-      <label for="date">Date</label>
+      <label for="date">Date</label>		
       <input type="text" name="date" id="date" value="" class="text ui-widget-content ui-corner-all">
       <label for="information">Information</label>
 
