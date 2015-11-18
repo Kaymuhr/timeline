@@ -7,6 +7,7 @@
 	<title>Timeline Example</title>
 	<!-- Bootstrap -->
 	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,200' rel='stylesheet' type='text/css'>	
+	<link href='https://fonts.googleapis.com/css?family=Merienda' rel='stylesheet' type='text/css'>
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 		<link href="css/jquery-ui.css" rel="stylesheet">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
@@ -17,20 +18,13 @@
 	<!-- Script -->
 	<script src="js/jquery-1.11.3.min"></script>
 	  <script src="js/jquery-ui.js"></script>
-	<script>
-	//$(document).ready(function() {
-	//var tlinfo = window.prompt("Please Enter Timeline info", "Text");
-    
-	//$('.tlinfo').text(tlinfo);
-});
 
-	</script>
 	<style>
     body { font-size: 95.5%; }
     label, input { display:block; }
     input.text { margin-bottom:12px; width:95%; padding: .4em; }
     fieldset { padding:0; border:0; margin-top:25px; }
-    h1 { font-size: 1.5em; margin: .6em 0; }
+    h1 { font-size: 1.5em; margin: .6em 0;  }
     div#users-contain { width: 350px; margin: 20px 0; }
     div#users-contain table { margin: 1em 0; border-collapse: collapse; width: 100%; }
     div#users-contain table td, div#users-contain table th { border: 1px solid #eee; padding: .6em 10px; text-align: left; }
@@ -47,9 +41,14 @@
       emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
       title = $( "#title" ),
       date = $( "#date" ),
-      information = $( "#information" ),
-      allFields = $( [] ).add( title ).add( date ).add( information ),
+      information = $( "#information" ),	
+     rating = $( ".rating" ),
+
+	 
+      allFields = $( [] ).add( title ).add( date ).add( information ).add( rating ),
       tips = $( ".validateTips" );
+	  
+	  
  
     function updateTips( t ) {
       tips
@@ -81,11 +80,11 @@
       }
     }
  
-    function addUser() {
+    function addEntry() {
       var valid = true;
       allFields.removeClass( "ui-state-error" );
  
-      valid = valid && checkLength( title, "title", 3, 16 );
+      valid = valid && checkLength( title, "title", 3, 60 );
       valid = valid && checkLength( date, "date", 6, 80 );
       valid = valid;
  
@@ -97,7 +96,7 @@
         $( ".timeline" ).append( "<li class=event>" +
           "<h3 class=heading>" + title.val() + "</h3>" +
           "<span class=month>" + date.val() + "</span>" +
-          "<div class=&quot>" + information.val() + "</div>" +
+          "<div class=tlinfo>" + information.val() + rating.val() + "</div>" +
         "</li>" );
         dialog.dialog( "close" );
       }
@@ -110,7 +109,7 @@
       width: 350,
       modal: true,
       buttons: {
-        "Create an account": addUser,
+        "Add entry": addEntry,
         Cancel: function() {
           dialog.dialog( "close" );
         }
@@ -123,7 +122,7 @@
  
     form = dialog.find( "form" ).on( "submit", function( event ) {
       event.preventDefault();
-      addUser();
+      addEntry();
     });
  
     $( "#create" ).button().on( "click", function() {
@@ -132,25 +131,23 @@
 	  $(function() {
     $( "#date" ).datepicker();
   });
+  
+  var bootstrapButton = $.fn.button.noConflict() // return $.fn.button to previously assigned value
+$.fn.bootstrapBtn = bootstrapButton            // give $().bootstrapBtn the Bootstrap functionality
+  
   });
   </script>
 </head>
 <body>
-<div class="container">
+
 <div id="dialog-form" title="Create new timeline item">
   <p class="validateTips">All form fields are required.</p>
  
   <form>
     <fieldset>
       <label for="title">Title</label>
-      <input type="text" name="title" id="title" value="" class="text ui-widget-content ui-corner-all">
-      <label for="date">Date</label>		
-      <input type="text" name="date" id="date" value="" class="text ui-widget-content ui-corner-all">
-      <label for="information">Information</label>
-
-	  <textarea id="information" rows="5" cols="20" name="information" id="information" value="" class="text ui-widget-content ui-corner-all"></textarea>
-	  <label for="rating">Importance</label>	
-	  <span class="rating">
+      <input type="text" name="title" id="title" value="" class="text ui-widget-content ui-corner-all"><label for="rating">Importance</label>	
+	    <span class="rating">
     <input type="radio" class="rating-input"
         id="rating-input-1-5" name="rating-input-1" value="1">
     <label for="rating-input-1-5" class="rating-star"></label>
@@ -166,7 +163,15 @@
     <input type="radio" class="rating-input"
         id="rating-input-1-1" name="rating-input-1" value="5">
     <label for="rating-input-1-1" class="rating-star"></label>
+	
 </span>
+      <label for="date">Date</label>		
+      <input type="text" name="date" id="date" value="" class="text ui-widget-content ui-corner-all">
+      <label for="information">Information</label>
+
+	  <textarea id="information" rows="5" cols="20" name="information" id="information" value="" class="text ui-widget-content ui-corner-all"></textarea>
+	  
+	
  
       <!-- Allow form submission with keyboard without duplicating the dialog button -->
       <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
@@ -175,17 +180,22 @@
 </div>
  
  
-
+<div class="row topbar">
+<div class="col-md-2"></div>
+<div class="col-md-8">
 
 
 
 	<h2 class="title text-center" >Timeline</h2>
+	</div>
+	 <div class="col-md-2">
   
 <button type="button" class="btn btn-default btn-lg btn-primary" id="create">
   <i class="fa fa-star"></i> New timeline item</button>
 
- 
- 
+</div>
+ </div>
+ <div class="container">
 	<ul class="timeline">
 		<li class="year">2015</li>
 		

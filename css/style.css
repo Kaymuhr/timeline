@@ -1,4 +1,15 @@
-.timeline {
+  body {background:#f1f4f9;}
+  
+  #create {margin-top:15px;}
+  h1, h2, .heading {font-family: 'Merienda', cursive;}
+  
+  .topbar {border-bottom:2px solid #c5c5c5; background:#0099cc; margin-bottom:15px;}
+  .topbar h2 {color:#fff;}
+ 
+  
+  label, input {font-size:16px;}
+  
+  .timeline {
 	background-image: url("../images/line-1.png");
     background-position: center; 
     background-repeat: repeat-y;
@@ -30,7 +41,7 @@
 .timeline li.end { margin-bottom: 2px;}
 .timeline li.year, .timeline li.event, .timeline li.end{
 	list-style-type: none;
-	z-index: 999;
+	
 }
 .timeline li.event{
      width: 45%;
@@ -53,14 +64,14 @@ li.event:nth-child(odd) {
     float: left;
 }
 li.event:nth-child(even) {
-    color: red;
+    color: #002147;
     clear: right;
     float: right;
     margin-top:100px;
     margin-bottom:50px;
 }
 .timeline li.event:nth-child(odd)::after {
-    background:red;
+    background:#002147;
     content: "";
     height: 2px;
     position: absolute;
@@ -70,7 +81,7 @@ li.event:nth-child(even) {
     
 }
 li.event:nth-child(even)::before{
-	background:red;
+	background:#002147;
     content: "";
     height: 2px;
     position: absolute;
@@ -128,12 +139,13 @@ li.event:nth-child(even)::before{
       height: 16px;
       background: url('../images/star.png') 0 -16px;
   }
-} 
+
+
 @media (max-width: 640px) {
 	.timeline li.event{
 		width: 80%;
 		background-color: #fff;
-		border: 1px solid #ff0000;
+		border: 1px solid #c5c5c5;
 		margin: 20px auto;
 		padding: 20px;
 		position: relative;
@@ -145,7 +157,7 @@ li.event:nth-child(even)::before{
 	    float: none;
 	}
 	li.event:nth-child(even) {
-	    color: red;
+	    color: #002147;
 	    clear: both;
 	    float: none;
 	}
