@@ -8,43 +8,165 @@
 	<!-- Bootstrap -->
 	<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,200' rel='stylesheet' type='text/css'>	
 	<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/jquery-ui.css" rel="stylesheet">
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 	<link href="css/style.css" rel="stylesheet">
 
+
 	<!-- Script -->
 	<script src="js/jquery-1.11.3.min"></script>
+	  <script src="js/jquery-ui.js"></script>
+	<script>
+	//$(document).ready(function() {
+	//var tlinfo = window.prompt("Please Enter Timeline info", "Text");
+    
+	//$('.tlinfo').text(tlinfo);
+});
+
+	</script>
+	<style>
+    body { font-size: 95.5%; }
+    label, input { display:block; }
+    input.text { margin-bottom:12px; width:95%; padding: .4em; }
+    fieldset { padding:0; border:0; margin-top:25px; }
+    h1 { font-size: 1.5em; margin: .6em 0; }
+    div#users-contain { width: 350px; margin: 20px 0; }
+    div#users-contain table { margin: 1em 0; border-collapse: collapse; width: 100%; }
+    div#users-contain table td, div#users-contain table th { border: 1px solid #eee; padding: .6em 10px; text-align: left; }
+    .ui-dialog .ui-state-error { padding: .3em; }
+    .validateTips { border: 1px solid transparent; padding: 0.3em; }
+  </style>
+	
+	  <script>
+
+   $(function() {
+    var dialog, form,
+ 
+      // From http://www.whatwg.org/specs/web-apps/current-work/multipage/states-of-the-type-attribute.html#e-mail-state-%28type=email%29
+      emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
+      title = $( "#title" ),
+      date = $( "#date" ),
+      information = $( "#information" ),
+      allFields = $( [] ).add( title ).add( date ).add( information ),
+      tips = $( ".validateTips" );
+ 
+    function updateTips( t ) {
+      tips
+        .text( t )
+        .addClass( "ui-state-highlight" );
+      setTimeout(function() {
+        tips.removeClass( "ui-state-highlight", 1500 );
+      }, 500 );
+    }
+ 
+    function checkLength( o, n, min, max ) {
+      if ( o.val().length > max || o.val().length < min ) {
+        o.addClass( "ui-state-error" );
+        updateTips( "Length of " + n + " must be between " +
+          min + " and " + max + "." );
+        return false;
+      } else {
+        return true;
+      }
+    }
+ 
+    function checkRegexp( o, regexp, n ) {
+      if ( !( regexp.test( o.val() ) ) ) {
+        o.addClass( "ui-state-error" );
+        updateTips( n );
+        return false;
+      } else {
+        return true;
+      }
+    }
+ 
+    function addUser() {
+      var valid = true;
+      allFields.removeClass( "ui-state-error" );
+ 
+      valid = valid && checkLength( title, "title", 3, 16 );
+      valid = valid && checkLength( date, "date", 6, 80 );
+      valid = valid && checkLength( information, "information", 5, 16 );
+ 
+      valid = valid && checkRegexp( title, /^[a-z]([0-9a-z_\s])+$/i, "Username may consist of a-z, 0-9, underscores, spaces and must begin with a letter." );
+      valid = valid;
+      valid = valid;
+ 
+      if ( valid ) {
+        $( ".timeline" ).append( "<li class=event>" +
+          "<h3 class=heading>" + title.val() + "</h3>" +
+          "<span class=month>" + date.val() + "</span>" +
+          "<div class=&quot>" + information.val() + "</div>" +
+        "</li>" );
+        dialog.dialog( "close" );
+      }
+      return valid;
+    }
+ 
+    dialog = $( "#dialog-form" ).dialog({
+      autoOpen: false,
+      height: 300,
+      width: 350,
+      modal: true,
+      buttons: {
+        "Create an account": addUser,
+        Cancel: function() {
+          dialog.dialog( "close" );
+        }
+      },
+      close: function() {
+        form[ 0 ].reset();
+        allFields.removeClass( "ui-state-error" );
+      }
+    });
+ 
+    form = dialog.find( "form" ).on( "submit", function( event ) {
+      event.preventDefault();
+      addUser();
+    });
+ 
+    $( "#create" ).button().on( "click", function() {
+      dialog.dialog( "open" );
+    });
+  });
+  </script>
 </head>
 <body>
 <div class="container">
-	<h2 class="title text-center" >Responsive Facebook Style Timeline Design With Twitter Bootstrap</h2>
+<div id="dialog-form" title="Create new timeline item">
+  <p class="validateTips">All form fields are required.</p>
+ 
+  <form>
+    <fieldset>
+      <label for="title">Title</label>
+      <input type="text" name="title" id="title" value="" class="text ui-widget-content ui-corner-all">
+      <label for="date">Date</label>
+      <input type="text" name="date" id="date" value="" class="text ui-widget-content ui-corner-all">
+      <label for="information">Information</label>
+      <input type="textarea" name="information" id="information" value="" class="text ui-widget-content ui-corner-all">
+ 
+      <!-- Allow form submission with keyboard without duplicating the dialog button -->
+      <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+    </fieldset>
+  </form>
+</div>
+ 
+ 
+
+
+
+
+	<h2 class="title text-center" >Timeline</h2>
+  
+<button type="button" class="btn btn-default btn-lg btn-primary" id="create">
+  <i class="fa fa-star"></i> New timeline item</button>
+
+ 
+ 
 	<ul class="timeline">
 		<li class="year">2015</li>
-		<li class="event">
-			<h3 class="heading">Event 1</h3>
-			<span class="month"><i class="fa fa-calendar"></i> &nbsp; March 2015</span>
-			
-			<p>Example item here, can include pictures.</p>
-			
-		</li>
-		<li class="event">
-			<h3 class="heading">Event 2</h3>
-			<span class="month"><i class="fa fa-calendar"></i> &nbsp; April 2015 </span>
-			
-			<p>Example text.</p>
-		</li>
-				<li class="event">
-			<h3 class="heading">Event 3</h3>
-			<span class="month"><i class="fa fa-calendar"></i> &nbsp; June 2015</span>
-			
-			<p>Example item here, can include pictures.</p>
-			
-		</li>
-		<li class="event">
-			<h3 class="heading">Event 4</h3>
-			<span class="month"><i class="fa fa-calendar"></i> &nbsp; April 2015 </span>
-			
-			<p>More example text.</p>
-		</li>
+		
+	
 	</ul>
 </div>
 </body>
