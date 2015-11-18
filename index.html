@@ -87,7 +87,7 @@
  
       valid = valid && checkLength( title, "title", 3, 16 );
       valid = valid && checkLength( date, "date", 6, 80 );
-      valid = valid && checkLength( information, "information", 5, 16 );
+      valid = valid;
  
       valid = valid && checkRegexp( title, /^[a-z]([0-9a-z_\s])+$/i, "Username may consist of a-z, 0-9, underscores, spaces and must begin with a letter." );
       valid = valid;
@@ -144,7 +144,8 @@
       <label for="date">Date</label>
       <input type="text" name="date" id="date" value="" class="text ui-widget-content ui-corner-all">
       <label for="information">Information</label>
-      <input type="textarea" name="information" id="information" value="" class="text ui-widget-content ui-corner-all">
+
+	  <textarea id="information" rows="5" cols="20" name="information" id="information" value="" class="text ui-widget-content ui-corner-all"></textarea>
  
       <!-- Allow form submission with keyboard without duplicating the dialog button -->
       <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
