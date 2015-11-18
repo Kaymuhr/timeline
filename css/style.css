@@ -78,3 +78,28 @@ li.event:nth-child(even)::before{
     width: 11.2%;
     left: -11.2%;
 } 
+@media (max-width: 640px) {
+	.timeline li.event{
+		width: 80%;
+		background-color: #fff;
+		border: 1px solid #ff0000;
+		margin: 20px auto;
+		padding: 20px;
+		position: relative;
+	}
+	
+	li.event:nth-child(odd) {
+	    color: green;
+	    clear: both;
+	    float: none;
+	}
+	li.event:nth-child(even) {
+	    color: red;
+	    clear: both;
+	    float: none;
+	}
+	
+	.timeline li.event:nth-child(odd)::after, li.event:nth-child(even)::before {
+	    width: 0px;
+	}
+}
