@@ -6,6 +6,7 @@
   .topbar {box-shadow:0 4px 9px rgba(0, 0, 0, 0.3); background:#0099cc; margin-bottom:15px;}
   .topbar h2 {color:#fff;}
  
+ .event span, .tlinfo{font-size:14px;}
   
   label, input {font-size:16px;}
   
